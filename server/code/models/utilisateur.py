@@ -13,11 +13,10 @@ class Utilisateur(db.Model):
     numtelephone = db.Column(db.String(15))
     image = db.Column(db.String(50))
     role = db.Column(db.Integer, nullable=False)
-    suspendu = db.Column(db.Integer, nullable=False)
+    suspendu = db.Column(db.Boolean, nullable=False)
     datecreation = db.Column(db.DateTime, nullable=False)
     datemodification = db.Column(db.DateTime, nullable=False)
 
-    # moderation = db.relationship('ModModel')
 
     def __init__(self, email, nom, prenom, pseudo, motdepasse, numtelephone, image, role, suspendu, datecreation, datemodification):
         self.email = email
@@ -29,7 +28,7 @@ class Utilisateur(db.Model):
         self.image = image
         self.role = role
         self.suspendu = suspendu
-        self. = datecreation
+        self.datecreation = datecreation
         self.datemodification = datemodification
 
     def json(self):
@@ -48,6 +47,10 @@ class Utilisateur(db.Model):
     @classmethod
     def find_by_name(cls, name):
         return cls.query.filter_by(nom=name).first()
+
+    @classmethod
+    def find_by_id(cls, _id):
+        return cls.query.filter_by(idutilisateur=_id).first()
 
     def save_to_db(self):
         db.session.add(self)
