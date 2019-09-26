@@ -1,5 +1,3 @@
-#!/bin/sh
-
 # Mise en place et activation de 
 # l'environnement virtuel Python3
 python3 -m venv venv
