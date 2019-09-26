@@ -5,3 +5,10 @@ Demna is a project aiming to help making contact between blood donors and and po
 It is distributed under the BSD3 licence.
 
 
+To start working on this project, please follow these steps:
+
+1- Clone this repo
+2- Go to /server in your terminal and execute from there the script project-venv-setup.sh,
+This will setup a virtual environment and install in it the dependencies you'll need to develop the backend part.
+
+(more steps to come for the front end part)
