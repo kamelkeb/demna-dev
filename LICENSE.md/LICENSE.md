@@ -1,9 +1,9 @@
 
-BSD License
+BSD 3-Clause License
 
 For the Demna Project.
 
-Copyright (c) 2019-2020, Kamel Berbiche. All rights reserved.
+Copyright (c) 2019, Kamel Berbiche. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
