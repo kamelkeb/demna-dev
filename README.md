@@ -15,4 +15,6 @@ To start working on this project, please follow these steps:
 
 This will setup a virtual environment and install in it the dependencies you'll need to develop the backend part.
 
-(more steps to come for the front end part)
+For the front-end part of this project please visit: 
+
+https://github.com/kamelkeb/demna-dev-front.git
