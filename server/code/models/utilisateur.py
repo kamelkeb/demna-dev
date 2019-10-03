@@ -41,16 +41,21 @@ class Utilisateur(db.Model):
                 'image': self.image, 
                 'role': self.role, 
                 'suspendu': self.suspendu, 
-                'datecreation': self.datecreation, 
-                'datemodification': self.datemodification}
+                'datecreation': str(self.datecreation), 
+                'datemodification': str(self.datemodification)}
 
     @classmethod
     def find_by_name(cls, name):
         return cls.query.filter_by(nom=name).first()
 
+    # @classmethod
+    # def find_by_id(cls, _id):
+    #     return cls.query.filter_by(idutilisateur=_id).first()
+
+    # Test
     @classmethod
     def find_by_id(cls, _id):
-        return cls.query.filter_by(idutilisateur=_id).first()
+        return False
 
     def save_to_db(self):
         db.session.add(self)

@@ -3,9 +3,12 @@ from flask_restful import Api
 from flask_jwt import JWT
 
 from security import authenticate, identity
-from resources.user import UserRegister
-from resources.item import Item, ItemList
-from resources.store import Store, StoreList
+# from resources.user import UserRegister
+# from resources.item import Item, ItemList
+# from resources.store import Store, StoreList
+
+from resources.utilisateur import UtilisateurDAO
+from resources.appelaudon import AppelaudonDAO
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
@@ -22,11 +25,18 @@ def create_tables():
 
 jwt = JWT(app, authenticate, identity)  # /auth
 
-api.add_resource(Store, '/store/<string:name>')
-api.add_resource(StoreList, '/stores')
-api.add_resource(Item, '/item/<string:name>')
-api.add_resource(ItemList, '/items')
-api.add_resource(UserRegister, '/register')
+# api.add_resource(Store, '/store/<string:name>')
+# api.add_resource(StoreList, '/stores')
+# api.add_resource(Item, '/item/<string:name>')
+# api.add_resource(ItemList, '/items')
+# api.add_resource(UserRegister, '/register')
+
+# api.add_resource(AppelaudonDAO, '/aad/<int:idappelaudon>')
+# api.add_resource(AppelaudonDAO, '/aad/<int:id>')
+# Test
+api.add_resource(AppelaudonDAO, '/api/appels')
+# api.add_resource(AppelaudonListe, '/aads')
+api.add_resource(UtilisateurDAO, '/api/utilisateurs')
 
 if __name__ == '__main__':
     from db import db

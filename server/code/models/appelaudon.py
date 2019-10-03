@@ -6,21 +6,21 @@ class Appelaudon(db.Model):
 
     idappelaudon = db.Column(db.Integer, primary_key=True)
     fkidutilisateur = db.Column(db.Integer, db.ForeignKey(u'utilisateur.idutilisateur'), nullable=False)
-    caracterisationbiologique = db.Column(JSON, nullable=False)
+    caracterisationbiologique = db.Column(db.String(255), nullable=False)
     quantiteattendue = db.Column(db.Integer, nullable=False)
-    lieudecollecte = db.Column(JSON, nullable=False)
-    calendriercollecte = db.Column(JSON, nullable=False)
-    motifetdescription = db.Column(db.String(1024), server_default=NULL)
+    lieudecollecte = db.Column(db.String(1024), nullable=False)
+    calendriercollecte = db.Column(db.String(1024), nullable=False)
+    motifetdescription = db.Column(db.String(1024))
     priorite = db.Column(db.Integer, nullable=False)
-    contactsubst = db.Column(JSON, server_default=NULL)
+    contactsubst = db.Column(db.String(1024))
     statut = db.Column(db.Integer, nullable=False)
     datecreation = db.Column(db.DateTime, nullable=False)
     datemodification = db.Column(db.DateTime, nullable=False)
 
     utilisateur = db.relationship(u'Utilisateur')
 
-    def __init__(self, idutilisateur, caracterisationbiologique, quantiteattendue, lieudecollecte, calendriercollecte, motifetdescription, priorite, contactsubst, statut, datecreation, datemodification):
-        self.idutilisateur = idutilisateur
+    def __init__(self, fkidutilisateur, caracterisationbiologique, quantiteattendue, lieudecollecte, calendriercollecte, motifetdescription, priorite, contactsubst, statut, datecreation, datemodification):
+        self.fkidutilisateur = fkidutilisateur
         self.caracterisationbiologique = caracterisationbiologique
         self.quantiteattendue = quantiteattendue
         self.lieudecollecte = lieudecollecte
@@ -33,7 +33,7 @@ class Appelaudon(db.Model):
         self.datemodification = datemodification
 
     def json(self):
-        return {'idutilisateur': self.idutilisateur,
+        return {'fkidutilisateur': self.fkidutilisateur,
                 'caracterisationbiologique': self.caracterisationbiologique,
                 'quantiteattendue': self.quantiteattendue,
                 'lieudecollecte': self.lieudecollecte,
@@ -42,12 +42,12 @@ class Appelaudon(db.Model):
                 'priorite': self.priorite,
                 'contactsubst': self.contactsubst,
                 'statut': self.statut,
-                'datecreation': self.datecreation,
-                'datemodification': self.datemodification}
+                'datecreation': str(self.datecreation),
+                'datemodification': str(self.datemodification)}
 
-    @classmethod
-    def find_by_id(cls, _id):
-        return cls.query.filter_by(idappelaudon=_id).first()
+    # @classmethod
+    # def find_by_id(cls, _id):
+    #     return cls.query.filter_by(idappelaudon=_id).first()
 
     def save_to_db(self):
         db.session.add(self)
