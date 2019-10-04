@@ -53,25 +53,23 @@ class AppelaudonDAO(Resource):
                         )
 
     # @jwt_required()
-    # def get(self, id):
-    #     aad = Appelaudon.find_by_id(id)
-    #     if aad:
-    #         return aad.json()
-    #     return {'message': 'Appel au don introuvable.'}, 404
+    # def get(self, name):
+    #     item = ItemModel.find_by_name(name)
+    #     if item:
+    #         return item.json()
+    #     return {'message': 'Item not found'}, 404
 
+    @jwt_required()
     def get(self):
         aadsJSON = list(map(lambda x: x.json(), Appelaudon.query.all()))
         if aadsJSON:
             return {'Appels aux dons': aadsJSON}, 201
         return {'message': 'Appels aux dons introuvables.'}, 500
 
-    # def post(self, id):
-    #     if Appelaudon.find_by_id(id):
-    #         return {'message': "Un appel au don avec cet id '{}' existe déjà.".format(id)}, 400
-
     def post(self):
         data = AppelaudonDAO.parser.parse_args()
 
+        dateBuild = datetime.datetime.now()
         aad = Appelaudon( 
                     data['fkidutilisateur'], 
                     data['caracterisationbiologique'], 
@@ -82,8 +80,8 @@ class AppelaudonDAO(Resource):
                     data['priorite'], 
                     data['contactsubst'], 
                     data['statut'], 
-                    datetime.datetime.now(),
-                    datetime.datetime.now()
+                    dateBuild,
+                    dateBuild
                     )
 
         try:
@@ -115,6 +113,6 @@ class AppelaudonDAO(Resource):
         return aad.json()
 
 
-# class AppelaudonListe(Resource):
+# class ItemList(Resource):
 #     def get(self):
-#         return {'Appels aux dons': list(map(lambda x: x.json(), Appelaudon.query.all()))}
+#         return {'items': list(map(lambda x: x.json(), ItemModel.query.all()))}

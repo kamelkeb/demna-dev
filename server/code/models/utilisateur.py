@@ -48,14 +48,13 @@ class Utilisateur(db.Model):
     def find_by_name(cls, name):
         return cls.query.filter_by(nom=name).first()
 
-    # @classmethod
-    # def find_by_id(cls, _id):
-    #     return cls.query.filter_by(idutilisateur=_id).first()
+    @classmethod
+    def find_by_email(cls, adr):
+        return cls.query.filter_by(email=adr).first()
 
-    # Test
     @classmethod
     def find_by_id(cls, _id):
-        return False
+        return cls.query.filter_by(idutilisateur=_id).first()
 
     def save_to_db(self):
         db.session.add(self)

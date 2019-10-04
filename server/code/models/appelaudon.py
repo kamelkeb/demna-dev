@@ -45,9 +45,9 @@ class Appelaudon(db.Model):
                 'datecreation': str(self.datecreation),
                 'datemodification': str(self.datemodification)}
 
-    # @classmethod
-    # def find_by_id(cls, _id):
-    #     return cls.query.filter_by(idappelaudon=_id).first()
+    @classmethod
+    def find_by_usrid(cls, _usrid):
+        return cls.query.filter_by(fkidutilisateur=_usrid).all()
 
     def save_to_db(self):
         db.session.add(self)

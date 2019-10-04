@@ -1,12 +1,10 @@
 from flask import Flask
 from flask_restful import Api
-from flask_jwt import JWT
+from flask_jwt import JWT, jwt_required, current_identity
 
 from security import authenticate, identity
-# from resources.user import UserRegister
-# from resources.item import Item, ItemList
-# from resources.store import Store, StoreList
 
+# from resources.item import Item, ItemList
 from resources.utilisateur import UtilisateurDAO
 from resources.appelaudon import AppelaudonDAO
 
@@ -25,17 +23,13 @@ def create_tables():
 
 jwt = JWT(app, authenticate, identity)  # /auth
 
-# api.add_resource(Store, '/store/<string:name>')
-# api.add_resource(StoreList, '/stores')
-# api.add_resource(Item, '/item/<string:name>')
-# api.add_resource(ItemList, '/items')
-# api.add_resource(UserRegister, '/register')
+@app.route('/protected')
+@jwt_required()
+def protected():
+    return '%s' % current_identity
 
-# api.add_resource(AppelaudonDAO, '/aad/<int:idappelaudon>')
-# api.add_resource(AppelaudonDAO, '/aad/<int:id>')
-# Test
+# api.add_resource(Item, '/item/<string:name>')
 api.add_resource(AppelaudonDAO, '/api/appels')
-# api.add_resource(AppelaudonListe, '/aads')
 api.add_resource(UtilisateurDAO, '/api/utilisateurs')
 
 if __name__ == '__main__':

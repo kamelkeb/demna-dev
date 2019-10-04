@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse
+from flask_jwt import jwt_required
 from models.utilisateur import Utilisateur
 import datetime
 
@@ -50,6 +51,9 @@ class UtilisateurDAO(Resource):
                         help="Champ facultatif"
                         )
 
+    #SEC.BUG: les données utilisateurs ne devraient pas être produits ici
+    #SEC.DE.BUG.TODO: ne pas retourner les données utilisateur vers le front...
+    @jwt_required()
     def get(self):
         usersJSON = list(map(lambda x: x.json(), Utilisateur.query.all()))
         if usersJSON:
@@ -59,9 +63,12 @@ class UtilisateurDAO(Resource):
     def post(self):
         data = UtilisateurDAO.parser.parse_args()
 
-        if Utilisateur.find_by_name(data['pseudo']):
-            return {"message": "Ce pseudo est déjà pris."}, 400
+        if Utilisateur.find_by_email(data['email']):
+            return {"message": "Cet email existe déjà."}, 400
 
+        #SEC.BUG: 'role' et 'suspendu' ne devraient pas être mappés ici
+        #SEC.DE.BUG.TODO: ne pas générer des comptes admin depuis le front...
+        dateBuild = datetime.datetime.now()
         user = Utilisateur(
             data['email'], 
             data['nom'], 
@@ -72,8 +79,8 @@ class UtilisateurDAO(Resource):
             data['image'], 
             data['role'] or 1, 
             data['suspendu'] or False, 
-            datetime.datetime.now(), 
-            datetime.datetime.now()
+            dateBuild, 
+            dateBuild
             )
         user.save_to_db()
 
